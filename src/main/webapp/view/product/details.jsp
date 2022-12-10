@@ -30,10 +30,10 @@
                         ${product.getDescription()}
                     </p>
                     <div class="single-product-form">
-                        <form action="">
-                            <input type="number" placeholder="0">
-                        </form>
-                        <a href="" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
+<%--                        <form action="">--%>
+<%--                            <input type="number" placeholder="0">--%>
+<%--                        </form>--%>
+                        <a href="/client/addtocart/${product.getProductReference()}" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
                         <p><strong>Categories: </strong>${product.getCategory()}</p>
                     </div>
                 </div>

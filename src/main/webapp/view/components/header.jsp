@@ -54,7 +54,7 @@
                             <li><a href="/products">Products</a></li>
                             <li>
                                 <div class="header-icons">
-                                    <a class="shopping-cart" href="/command"><i class="fa-solid fa-cart-shopping"></i></a>
+                                    <a class="shopping-cart" href="/cart"><i class="fa-solid fa-cart-shopping"></i></a>
                                     <a class="mobile-hide search-bar-icon" href="#"><i class="fas fa-search"></i></a>
                                 </div>
                             </li>

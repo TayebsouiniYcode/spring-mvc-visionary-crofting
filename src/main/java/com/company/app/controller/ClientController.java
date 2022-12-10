@@ -5,6 +5,7 @@ import com.company.app.classes.Cart;
 import com.company.app.classes.Message;
 import com.company.app.classes.PasserCommande;
 import com.company.app.entity.Client;
+import com.company.app.entity.Product;
 import com.company.app.service.ClientService;
 import com.company.app.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 //@RequestMapping(path = "visionarycrofting/Client")
@@ -70,6 +68,22 @@ public class ClientController {
         } else {
             return "product/products";
         }
+    }
+
+    /*
+        ToDo
+        compare reference and choice One
+     */
+    @RequestMapping(path = "/cart")
+    public String cart(@ModelAttribute("cart") Cart cart, Model model){
+        List<String> productReferenceList = cart.getProductReferences ();
+        List<Product> productList = new ArrayList <> ();
+        productReferenceList.stream ().forEach ( (reference) -> {
+            productList.add ( productService.getProductByReference ( reference ) );
+        } );
+
+        model.addAttribute ( "products", productList );
+        return "product/cart";
     }
 
     @PostMapping("/addClient")
