@@ -47,7 +47,7 @@
                         </div>
                         <h3>${product.getName()}</h3>
                         <p class="product-price"><span>Per One piace</span> ${product.getUnitaryPrice()} Dh</p>
-                        <a href="/product/addToCatd/${product.getId()}" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
+                        <a href="/client/addtocart/${product.getProductReference()}" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
                     </div>
                 </div>
             </c:forEach>

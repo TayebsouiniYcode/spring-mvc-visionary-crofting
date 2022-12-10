@@ -1,22 +1,36 @@
 package com.company.app.controller;
 
 
+import com.company.app.classes.Cart;
 import com.company.app.classes.Message;
 import com.company.app.classes.PasserCommande;
 import com.company.app.entity.Client;
 import com.company.app.service.ClientService;
+import com.company.app.service.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping(path = "visionarycrofting/Client")
+//@RequestMapping(path = "visionarycrofting/Client")
+@SessionAttributes("cart")
 public class ClientController {
-private final ClientService clientService;
+    @ModelAttribute("cart")
+    public Cart cart() {
+        return new Cart ();
+    }
+
+    @Autowired
+    private ProductService productService;
+    private final ClientService clientService;
 
     public ClientController(ClientService clientService) {
         this.clientService = clientService;
@@ -32,6 +46,30 @@ private final ClientService clientService;
     @GetMapping("/{client_id}")
     public Optional<Client> getOne(@PathVariable("client_id") Long clientId){
         return clientService.getOneById(clientId);
+    }
+
+    @RequestMapping(path = "/client/addtocart/{productReference}")
+    public String addProductToCart( @ModelAttribute("cart") Cart cart,Model model, @PathVariable String  productReference ){
+        if ( cart != null) {
+            cart.setProductReferences(productReference);
+            model.addAttribute("cart", cart);
+        } else {
+            Cart cart_ = new Cart ();
+            cart.setProductReferences(productReference);
+            model.addAttribute("cart", cart);
+        }
+        model.addAttribute ( "products", productService.getProducts () );
+        return "product/products";
+    }
+
+    @RequestMapping(path = "/showcart")
+    public String showCart(@ModelAttribute("cart") Cart cart){
+        if (cart != null) {
+            System.out.println (cart.toString () );
+            return "product/products";
+        } else {
+            return "product/products";
+        }
     }
 
     @PostMapping("/addClient")
