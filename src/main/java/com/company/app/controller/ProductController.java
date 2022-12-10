@@ -23,6 +23,13 @@ public class ProductController {
         return "product/products";
     }
 
+    @RequestMapping(path = "/product/{id}", method=RequestMethod.GET)
+    public String productDetail(Model model, @PathVariable Long id){
+        Product product = productService.getProductById ( id );
+
+        model.addAttribute ( "product", product );
+        return "product/details";
+    }
 
     @GetMapping("/productList")
     @ResponseBody

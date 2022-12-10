@@ -19,6 +19,24 @@ public class ProductService {
         return productRepository.findAll ();
     }
 
+    public Product getProductById(Long id) {
+        Optional<Product> productOptional =  productRepository.findAllById(id);
+        Message message = new Message (  );
+        if (productOptional.isPresent ()){
+            message.setState ( "Success" );
+            message.setMessage ( "Product exists" );
+            productOptional.get ().setMessage ( message );
+
+            return productOptional.get ();
+        } else {
+            message.setState ( "Error" );
+            message.setMessage ( "Product is not exists" );
+            productOptional.get ().setMessage ( message );
+
+            return  productOptional.get ();
+        }
+    }
+
     public Product addProduct ( Product product ) {
         Message message = new Message (  );
         Optional<Product> productOptional = productRepository.findProductByProductReference ( product.getProductReference () );

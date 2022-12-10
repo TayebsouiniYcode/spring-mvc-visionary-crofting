@@ -5,6 +5,7 @@ import com.company.app.classes.Message;
 import com.company.app.classes.PasserCommande;
 import com.company.app.entity.Client;
 import com.company.app.service.ClientService;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -12,7 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
-@RestController
+@Controller
 @RequestMapping(path = "visionarycrofting/Client")
 public class ClientController {
 private final ClientService clientService;

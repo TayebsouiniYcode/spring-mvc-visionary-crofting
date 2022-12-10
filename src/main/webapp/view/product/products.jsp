@@ -46,7 +46,7 @@
                             <a href="/product/${product.getId()}"><img src="../../static/img/products/${product.getId()}.png" alt=""></a>
                         </div>
                         <h3>${product.getName()}</h3>
-                        <p class="product-price"><span>Per One piace</span> ${product.getUnitaryPrice()} </p>
+                        <p class="product-price"><span>Per One piace</span> ${product.getUnitaryPrice()} Dh</p>
                         <a href="/product/addToCatd/${product.getId()}" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
                     </div>
                 </div>
