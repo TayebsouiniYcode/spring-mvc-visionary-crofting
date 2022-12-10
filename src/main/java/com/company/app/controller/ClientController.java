@@ -1,0 +1,63 @@
+package com.company.app.controller;
+
+
+import com.company.app.classes.Message;
+import com.company.app.classes.PasserCommande;
+import com.company.app.entity.Client;
+import com.company.app.service.ClientService;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Optional;
+
+@RestController
+@RequestMapping(path = "visionarycrofting/Client")
+public class ClientController {
+private final ClientService clientService;
+
+    public ClientController(ClientService clientService) {
+        this.clientService = clientService;
+    }
+
+    @GetMapping("/Clients")
+    @ResponseBody
+    public List< Client > getClients()
+    {
+        return clientService.getClients();
+    }
+
+    @GetMapping("/{client_id}")
+    public Optional<Client> getOne(@PathVariable("client_id") Long clientId){
+        return clientService.getOneById(clientId);
+    }
+
+    @PostMapping("/addClient")
+    public Client registerNewClient(@RequestBody Client client)
+    {
+        return clientService.addClient(client);
+    }
+
+    @DeleteMapping(path = "deleteClient/{clientId}")
+    public Message deleteClient( @PathVariable("clientId") Long clientId)
+    {
+        return clientService.deleteClient(clientId);
+    }
+
+    @PutMapping(path = "/updateClient")
+    public Client updateClient(@RequestBody Client client)
+
+    {
+        return clientService.updateClient(client);
+    }
+
+
+    @PostMapping("/passer_commande/{idClient}")
+    @ResponseBody
+    public Client passerCommande(@PathVariable Long idClient,@RequestBody Collection< PasserCommande > productList)
+    {
+        return clientService.passerCommande(idClient, productList);
+    }
+
+}

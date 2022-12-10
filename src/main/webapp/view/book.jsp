@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Book</title>
-    <script src="${pageContext.request.contextPath}/static/js/main.js"></script>
+    <script src="${pageContext.request.contextPath}/static/js/mainOld.js"></script>
 </head>
 <body>
 <h1>Testing</h1>
