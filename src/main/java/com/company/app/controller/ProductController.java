@@ -1,5 +1,7 @@
 package com.company.app.controller;
 
+import com.company.app.classes.Message;
+import com.company.app.entity.Product;
 import com.company.app.service.ProductService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,16 +16,15 @@ public class ProductController {
     @Autowired
     ProductService productService;
 
-    @RequestMapping(path="/", method=RequestMethod.GET)
-    public String index() {
-        return "home";
+    @RequestMapping(path="/products", method=RequestMethod.GET)
+    public String products(Model model) {
+        List<Product> products = productService.getProducts();
+        model.addAttribute ( "products", products );
+        return "product/products";
     }
 
-    //public ProductController ( ProductService productService ) {
-    //    this.productService = productService;
-    //}
-    /*
-    @GetMapping("/products")
+
+    @GetMapping("/productList")
     @ResponseBody
     public List < Product > getClients()
     {
@@ -75,15 +76,15 @@ public class ProductController {
             return productService.addProduct(product);
         } else return product;
     }
-    */
 
-    //@PutMapping("/updateproduct")
-    //@ResponseBody
-    //public Product updateProduct(@RequestBody Product product) {
-    //    return productService.updateProduct(product);
-    //}
 
-    //@DeleteMapping("/delete/{id}")
-    //@ResponseBody
-    //public Message deleteProduct(@PathVariable Long id){ return productService.deleteProduct(id);}
+    @PutMapping("/updateproduct")
+    @ResponseBody
+    public Product updateProduct(@RequestBody Product product) {
+        return productService.updateProduct(product);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    @ResponseBody
+    public Message deleteProduct(@PathVariable Long id){ return productService.deleteProduct(id);}
 }
