@@ -119,4 +119,9 @@ public class ClientService {
     public List< Command> getCommandByClient ( Long id ) {
         return clientRepository.findCommandByClient ( id );
     }
+
+    public Client getFirstClient ( ) {
+        Client client = clientRepository.getOne ( 1L );
+        return client;
+    }
 }

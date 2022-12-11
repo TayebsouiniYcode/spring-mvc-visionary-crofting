@@ -4,17 +4,16 @@ package com.company.app.controller;
 import com.company.app.classes.Cart;
 import com.company.app.classes.Message;
 import com.company.app.classes.PasserCommande;
+import com.company.app.classes.ProductListForm;
 import com.company.app.entity.Client;
 import com.company.app.entity.Product;
 import com.company.app.service.ClientService;
 import com.company.app.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import java.util.*;
 
 @Controller
@@ -82,8 +81,28 @@ public class ClientController {
             productList.add ( productService.getProductByReference ( reference ) );
         } );
 
+        model.addAttribute ( "client", clientService.getFirstClient() );
         model.addAttribute ( "products", productList );
         return "product/cart";
+    }
+
+    @RequestMapping(path = "/passer_commande/{idClient}", method = RequestMethod.POST)
+    public String passerCommand(Model model, @PathVariable Long idClient, @ModelAttribute("productListForm") ProductListForm productListForm ){
+        if (idClient != null && idClient > 0) {
+            String[] productList = productListForm.toString ().split ( "/" );
+            Collection< PasserCommande> passerCommandes = new ArrayList <> (  );
+            PasserCommande passerCommande = new PasserCommande (  );
+
+            for ( int i = 0 ; i < productList.length ; i++ ) {
+                String[] referenceQuantity = productList[i].split ( "," );
+                passerCommande.setRef ( referenceQuantity[0] );
+                passerCommande.setQuantity ( Integer.parseInt ( referenceQuantity[1]) );
+                passerCommandes.add ( passerCommande );
+            }
+            clientService.passerCommande(idClient, passerCommandes);
+        }
+        model.addAttribute ( "products" , productService.getProducts () );
+        return "product/products";
     }
 
     @PostMapping("/addClient")
@@ -106,7 +125,7 @@ public class ClientController {
     }
 
 
-    @PostMapping("/passer_commande/{idClient}")
+    @PostMapping("/passer_command/{idClient}")
     @ResponseBody
     public Client passerCommande(@PathVariable Long idClient,@RequestBody Collection< PasserCommande > productList)
     {

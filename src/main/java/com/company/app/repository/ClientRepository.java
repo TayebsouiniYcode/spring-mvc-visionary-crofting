@@ -12,7 +12,7 @@ public interface ClientRepository extends JpaRepository< Client,Long>
 {
 
 
-Optional<Client> findClientByEmail(String email);
+    Optional<Client> findClientByEmail(String email);
 
     @Query("SELECT c FROM Command c WHERE c.client.id = ?1")
     List < Command > findCommandByClient( Long id);
