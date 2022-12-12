@@ -69,7 +69,6 @@
                             <th>Name</th>
                             <th>Email</th>
                             <th>Phone</th>
-                            <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -79,9 +78,6 @@
                                 <td>${client.getName()}</td>
                                 <td>${client.getEmail()}</td>
                                 <td>${client.getPhone()}</td>
-                                <td>
-                                    <a href="/client/delete/${client.getId()}">Delete</a>
-                                </td>
                             </tr>
                         </c:forEach>
                         </tbody>
@@ -100,7 +96,7 @@
                             <th>Reference</th>
                             <th>Date</th>
                             <th>Client</th>
-                            <th>Action</th>
+                            <th>Total</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -110,9 +106,7 @@
                                 <td>${command.getRef()}</td>
                                 <td>${command.getDateTime()}</td>
                                 <td>${command.getClient().getName()}</td>
-                                <td>
-                                    <a href="/command/delete/${command.getId()}">Delete</a>
-                                </td>
+                                <td>${command.getTotalPrice()} <span>Dh</span></td>
                             </tr>
                         </c:forEach>
                         </tbody>

@@ -45,4 +45,39 @@ public class AuthController {
             return "redirect:/login";
         }
     }
+
+    @RequestMapping(path = "/register", method = RequestMethod.GET)
+    public String register(){
+        return "admin/register";
+    }
+
+    @RequestMapping(path = "/register", method = RequestMethod.POST)
+    public String register(@ModelAttribute("register") Client client,
+                           HttpSession session){
+        if (client != null && !client.equals ( new Client ()) ){
+            if (client.getName () != null
+                    && client.getEmail () != null
+                    && client.getPhone () != null
+                    && client.getAddress () != null) {
+                client = clientService.addClient ( client );
+
+                if (!client.equals ( new Client (  ) )) {
+                    session.setAttribute ( "client", client );
+                    return "redirect:/dashboard";
+                }
+                else {
+                    return "redirect:/login";
+                }
+            }
+            return "redirect:/login";
+        }
+        return "redirect:/login";
+
+    }
+
+    @RequestMapping(path = "/logout", method = RequestMethod.GET)
+    public String logout(HttpSession session){
+        session.invalidate ();
+        return "redirect:/login";
+    }
 }

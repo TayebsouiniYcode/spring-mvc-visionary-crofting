@@ -57,7 +57,13 @@
                                 <div class="header-icons">
                                     <a class="shopping-cart" href="/cart"><i class="fa-solid fa-cart-shopping"></i></a>
                                     <a class="mobile-hide search-bar-icon" href="#"><i class="fas fa-search"></i></a>
-                                    <a class="" href="/login"><i class="fas fa-sign-in-alt"></i></a>
+                                    <% if (session.getAttribute ( "client" ) != null) { %>
+                                        <a class="" href="/logout">Logout</a>
+                                    <% } else {%>
+                                        <a class="" href="/login"><i class="fas fa-sign-in-alt"></i></a>
+                                    <% } %>
+
+
                                 </div>
                             </li>
                         </ul>
