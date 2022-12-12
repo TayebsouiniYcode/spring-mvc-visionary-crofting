@@ -1,6 +1,5 @@
 package com.company.app.controller;
 
-
 import com.company.app.classes.Cart;
 import com.company.app.classes.Message;
 import com.company.app.classes.PasserCommande;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
 @Controller
-//@RequestMapping(path = "visionarycrofting/Client")
 @SessionAttributes("cart")
 public class ClientController {
     @ModelAttribute("cart")
@@ -45,8 +43,10 @@ public class ClientController {
         return clientService.getOneById(clientId);
     }
 
-    @RequestMapping(path = "/client/addtocart/{productReference}")
-    public String addProductToCart( @ModelAttribute("cart") Cart cart,Model model, @PathVariable String  productReference ){
+    @RequestMapping(path = "/client/addtocart/{productReference}", method = RequestMethod.GET)
+    public String addProductToCart( @ModelAttribute("cart") Cart cart,
+                                    Model model,
+                                    @PathVariable String  productReference ){
         if ( cart != null) {
             cart.setProductReferences(productReference);
             model.addAttribute("cart", cart);
@@ -86,8 +86,18 @@ public class ClientController {
         return "product/cart";
     }
 
+    /*
+        ToDo
+
+        **** refactoring
+     */
     @RequestMapping(path = "/passer_commande/{idClient}", method = RequestMethod.POST)
-    public String passerCommand(Model model, @PathVariable Long idClient, @ModelAttribute("productListForm") ProductListForm productListForm ){
+    public String passerCommand(Model model,
+                                @PathVariable Long idClient,
+                                @ModelAttribute("productListForm") ProductListForm productListForm,
+                                @ModelAttribute("cart") Cart cart )
+
+    {
         if (idClient != null && idClient > 0) {
             String[] productList = productListForm.toString ().split ( "/" );
             Collection< PasserCommande> passerCommandes = new ArrayList <> (  );
@@ -101,6 +111,7 @@ public class ClientController {
             }
             clientService.passerCommande(idClient, passerCommandes);
         }
+        cart.clear();
         model.addAttribute ( "products" , productService.getProducts () );
         return "product/products";
     }

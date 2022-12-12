@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -31,24 +32,22 @@ public class ProductController {
         return "product/details";
     }
 
-    @GetMapping("/productList")
-    @ResponseBody
-    public List < Product > getClients()
-    {
-        return productService.getProducts();
+    @RequestMapping(path = "/addproduct", method = RequestMethod.GET)
+    public String addProduct(){
+        return "product/addproduct";
     }
 
-    @PostMapping("/addProduct")
-    @ResponseBody
-    public Product addProduct(@RequestBody Product product) {
+    @RequestMapping(path = "/addproduct", method = RequestMethod.POST)
+    public String addProduct(@ModelAttribute("product") Product product) {
         boolean isValide = true;
         Message message = new Message (  );
 
         if (product.getProductReference () == null) {
-            isValide = !isValide;
-            message.setState ( "Error" );
-            message.setMessage ( "Reference does not null value" );
-            product.setMessage ( message );
+            product.setProductReference ( "ref" + product.getName () + "-" + LocalDate.now ( ) );
+//            isValide = !isValide;
+//            message.setState ( "Error" );
+//            message.setMessage ( "Reference does not null value" );
+//            product.setMessage ( message );
         } else if (product.getQuantity () == null){
             isValide = !isValide;
             message.setState ( "Error" );
@@ -80,18 +79,29 @@ public class ProductController {
             message.setState ( "Success" );
             message.setMessage ( "your product has been successfully created" );
             product.setMessage ( message );
-            return productService.addProduct(product);
-        } else return product;
+            productService.addProduct(product);
+            return "redirect:/dashboard";
+        } else return "redirect:/dashboard";
     }
 
+    @RequestMapping(path = "/deleteproduct/{id}", method = RequestMethod.GET)
+    public String deleteProduct(@PathVariable Long id){
+        productService.deleteProduct(id);
+        return "redirect:/dashboard";
+    }
+
+
+
+    @GetMapping("/productList")
+    @ResponseBody
+    public List < Product > getClients()
+    {
+        return productService.getProducts();
+    }
 
     @PutMapping("/updateproduct")
     @ResponseBody
     public Product updateProduct(@RequestBody Product product) {
         return productService.updateProduct(product);
     }
-
-    @DeleteMapping("/delete/{id}")
-    @ResponseBody
-    public Message deleteProduct(@PathVariable Long id){ return productService.deleteProduct(id);}
 }

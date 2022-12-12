@@ -8,7 +8,6 @@ import com.company.app.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.Transient;
 import javax.transaction.Transactional;
 import java.util.Collection;
 import java.util.List;
@@ -19,7 +18,6 @@ public class ClientService {
     private final ClientRepository clientRepository;
     private final CommandService commandService;
 
-    @Autowired
     public ClientService(ClientRepository clientRepository, CommandService commandService) {
         this.clientRepository = clientRepository;
         this.commandService = commandService;
@@ -123,5 +121,24 @@ public class ClientService {
     public Client getFirstClient ( ) {
         Client client = clientRepository.getOne ( 1L );
         return client;
+    }
+
+    public Client getClientByEmail ( String email) {
+        Optional<Client> clientOptional = clientRepository.findClientByEmail ( email );
+        Message message = new Message (  );
+
+        if(clientOptional.isPresent ()){
+            message.setState ( "Success" );
+            message.setMessage ( "Client is present" );
+            clientOptional.get ().setMessage ( message );
+
+            return clientOptional.get ();
+        } else {
+            message.setState ( "Error" );
+            message.setMessage ( "Email not found" );
+            clientOptional.get ().setMessage ( message );
+
+            return clientOptional.get ();
+        }
     }
 }

@@ -30,9 +30,9 @@
                 <div class="product-filters">
                     <ul>
                         <li class="active" data-filter="*">All</li>
-                        <li data-filter=".strawberry">Strawberry</li>
-                        <li data-filter=".berry">Berry</li>
-                        <li data-filter=".lemon">Lemon</li>
+                        <li data-filter=".strawberry">Informatique</li>
+                        <li class="d-none" data-filter=".berry"></li>
+                        <li class="d-none" data-filter=".lemon"></li>
                     </ul>
                 </div>
             </div>

@@ -15,6 +15,10 @@ public class Cart {
         this.productReferences.add ( productReferences ) ;
     }
 
+    public void clear() {
+        this.productReferences.clear ();
+    }
+
     @Override
     public String toString ( ) {
         return "Cart{" +
