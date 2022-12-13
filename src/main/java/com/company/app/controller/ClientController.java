@@ -31,16 +31,17 @@ public class ClientController {
         this.clientService = clientService;
     }
 
-    @GetMapping("/Clients")
-    @ResponseBody
-    public List< Client > getClients()
+    @RequestMapping(path = "/Clients", method = RequestMethod.GET)
+    public String getClients(Model model)
     {
-        return clientService.getClients();
+        model.addAttribute ( "clients",  clientService.getClients());
+        return "client/clients";
     }
 
-    @GetMapping("/{client_id}")
-    public Optional<Client> getOne(@PathVariable("client_id") Long clientId){
-        return clientService.getOneById(clientId);
+    @RequestMapping(path = "/client/{client_id}")
+    public String getOne(@PathVariable("client_id") Long clientId, Model model){
+        model.addAttribute ( "client" , clientService.getOneById(clientId).get ());
+        return "client/client";
     }
 
     @RequestMapping(path = "/client/addtocart/{productReference}", method = RequestMethod.GET)

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -24,8 +25,14 @@ public class AdminController {
     @Autowired
     private CommandService commandService;
 
+
     @RequestMapping(path = "/dashboard", method = RequestMethod.GET)
-    public String dashboard( Model model){
+    public String dashboard( Model model,
+                             HttpSession session ){
+
+        if (session.getAttribute ( "client" ) == null ) {
+            return "redirect:/login";
+        }
         List< Client > clients = clientService.getClients ();
         List< Command > commands = commandService.getCommand ();
         List<Product> products = productService.getProducts ();

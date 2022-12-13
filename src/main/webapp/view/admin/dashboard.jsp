@@ -49,7 +49,7 @@
                                 <td>${product.getUnitaryPrice()}</td>
                                 <td>${product.getCategory()}</td>
                                 <td>
-                                    <a href="/deleteproduct/${product.getId()}">Delete</a>
+                                    <a href="/deleteproduct/${product.getId()}"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                 </td>
                             </tr>
                         </c:forEach>
