@@ -1,5 +1,3 @@
-[![Build Status](https://travis-ci.org/egnaf/spring-jsp-example.svg)](https://travis-ci.org/egnaf/spring-jsp-example)
-
 # spring-jsp-example
 
 ## Stack
@@ -17,11 +15,6 @@
     ```bash
     $ mvn spring-boot:run
     ```
-
-## Contribute
-For any problems, comments, or feedback please create an issue 
-[here](https://github.com/egnaf/spring-web-jsp-example/issues).
-<br>
 
 ## License
 Project is released under the [MIT](https://en.wikipedia.org/wiki/MIT_License).
